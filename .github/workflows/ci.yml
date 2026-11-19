@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: build, vet, lint, test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    services:
+      postgres:
+        # Same image as docker-compose.yml. Throwaway credentials for an ephemeral container.
+        image: postgres:18.7-alpine
+        env:
+          POSTGRES_USER: ledger
+          POSTGRES_PASSWORD: ledger-ci
+          POSTGRES_DB: ledger
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U ledger -d ledger"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      DATABASE_URL: postgres://ledger:ledger-ci@localhost:5432/ledger?sslmode=disable
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@d8cbb8045d7f43706b9177cceb36c1f91a6644d5 # v7.1.0
+        with:
+          go-version-file: go.mod
+      - name: Build
+        run: go build ./...
+      - name: Vet
+        run: go vet ./...
+      - name: Lint
+        run: go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.15.0 run
+      - name: Test
+        run: |
+          go test -count=1 -v ./... 2>&1 | tee "$RUNNER_TEMP/go-test.log"
+          if grep -q -- '--- SKIP' "$RUNNER_TEMP/go-test.log"; then
+            echo "::error::Postgres tests were skipped; check the postgres service and DATABASE_URL"
+            exit 1
+          fi
