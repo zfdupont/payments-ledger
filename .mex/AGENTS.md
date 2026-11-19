@@ -17,11 +17,11 @@ A Go double-entry payments ledger over Postgres with idempotent writes, a transa
 - Money is integer minor units plus currency code; never floats
 
 ## Commands
-No code yet; planned (confirm after first implementation):
-- Infra: `docker compose up -d`
-- Test: `go test ./...`
-- Lint: `go vet ./...` and `golangci-lint run`
+- Infra: `docker compose up -d --wait` (Postgres 5432, Redpanda 9092, Temporal 7233 + UI 8233, all on 127.0.0.1)
+- Run: `go run ./cmd/ledger` (placeholder; prints `payments-ledger`)
 - Build: `go build ./...`
+- Test: `go test ./...`
+- Lint: `go vet ./...` (`golangci-lint run` planned, not installed yet)
 
 ## Project Knowledge
 For a question about project decisions, conventions, or behavior, start with `mex wiki query "<question>" --limit 5 --json`. Inspect matched terms and each grounding's health: partial matches are leads, and `changed` means re-check the claim against code. If the index is unavailable, follow `ROUTER.md` or start from `mex graph scope "<task>"`. Reads never rebuild or refresh an index.

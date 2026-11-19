@@ -46,19 +46,19 @@ mex:
 -->
 
 ## Prerequisites
-- Go toolchain. [TO BE DETERMINED: version]
+- Go 1.27 or newer (`go.mod` declares `go 1.27`)
 - Docker with Docker Compose
 - Temporal CLI (optional, for inspecting workflows)
 
 ## First-time Setup
-[TO BE DETERMINED: confirm after the compose file and Go module exist]
 1. Copy `.env.example` to `.env` and fill in values
-2. `docker compose up -d` (Postgres, Redpanda, Temporal dev server)
+2. `docker compose up -d --wait` (Postgres, Redpanda, Temporal dev server; `POSTGRES_USER`/`POSTGRES_PASSWORD`/`POSTGRES_DB` must match `DATABASE_URL`)
 3. Run migrations [TO BE DETERMINED: command]
 4. Run the service [TO BE DETERMINED: command]
 
 ## Environment Variables
 - `DATABASE_URL` (required) -- Postgres connection string
+- `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` (compose only) -- must match `DATABASE_URL`
 - `KAFKA_BROKERS` (required) -- Redpanda brokers
 - `OUTBOX_TOPIC` (required) -- topic the outbox relay publishes to
 - `TEMPORAL_HOST`, `TEMPORAL_NAMESPACE`, `TEMPORAL_TASK_QUEUE` (required) -- Temporal connection
@@ -69,11 +69,11 @@ mex:
 - `HTTP_ADDR` (optional) -- listen address
 
 ## Common Commands
-Planned, confirm after first implementation:
-- `docker compose up -d` -- start local infra
+- `docker compose up -d --wait` -- start local infra; `docker compose down -v` to reset
+- `go run ./cmd/ledger` -- run the (placeholder) service
 - `go test ./...` -- run tests
-- `go vet ./...` / `golangci-lint run` -- lint
-- `go build ./...` -- build
+- `go vet ./...` -- lint (`golangci-lint run` planned)
+- `go build ./...` -- build (writes a `ledger` binary in the repo root)
 
 ## Common Issues
 [TO BE DETERMINED: populate after first implementation]

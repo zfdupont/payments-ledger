@@ -46,13 +46,13 @@ mex:
 ## Naming
 - Database tables and columns: snake_case. [VERIFY AFTER FIRST IMPLEMENTATION]
 - Money fields: `amount_minor` (int64) paired with `currency` (ISO 4217)
-- [TO BE DETERMINED: Go package layout names]
+- Go packages: binaries under `cmd/<name>` (currently `cmd/ledger`); internal code planned under `internal/<area>` (e.g. `internal/ledger`, `internal/api`)
 
 ## Structure
 - Ledger table writes live only in the ledger service package; handlers never write ledger tables
 - Outbox rows are written in the same transaction as the ledger change they describe
 - Schema changes only through versioned migration files
-- [TO BE DETERMINED: directory layout, populate after first implementation]
+- Layout: `cmd/ledger` (entry point), `migrations/` (planned), `internal/` (planned), `docker-compose.yml` at repo root
 
 ## Patterns
 Idempotent writes: check-or-insert the idempotency record inside the same transaction as the write.

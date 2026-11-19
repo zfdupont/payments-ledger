@@ -1,1 +1,55 @@
-{"jobs": []}
+{
+  "jobs": [
+    {
+      "id": "001-go-module",
+      "title": "Go module, smoke test, factory commands",
+      "branch": "factory/001-go-module",
+      "worktree": "/Users/zfdupont/payments-ledger-factory/001-go-module",
+      "stage": "merged",
+      "round": 1,
+      "rework": 0,
+      "reviews": {
+        "invariants": "PASS",
+        "logic": "PASS",
+        "maintainability": "PASS",
+        "security": "PASS",
+        "contract-api": "PASS"
+      },
+      "history": [],
+      "note": "merged via /factory:approve (arbiter ACCEPT)",
+      "updated": "2026-11-19T11:53:25Z",
+      "lane": "full"
+    },
+    {
+      "id": "002-docker-compose",
+      "title": "docker-compose: Postgres, Redpanda, Temporal",
+      "branch": "factory/002-docker-compose",
+      "worktree": "/Users/zfdupont/payments-ledger-factory/002-docker-compose",
+      "stage": "merged",
+      "round": 2,
+      "rework": 1,
+      "reviews": {
+        "invariants": "PASS",
+        "logic": "PASS",
+        "maintainability": "PASS",
+        "security": "PASS",
+        "contract-api": "PASS"
+      },
+      "history": [
+        {
+          "round": 1,
+          "reviews": {
+            "invariants": "PASS",
+            "logic": "PASS",
+            "maintainability": "CHANGES",
+            "security": "PASS",
+            "contract-api": "PASS"
+          }
+        }
+      ],
+      "note": "auto-approved and merged",
+      "updated": "2026-11-19T11:54:15Z",
+      "lane": "full"
+    }
+  ]
+}

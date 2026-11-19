@@ -25,12 +25,11 @@ Kubernetes deployment on EKS. Scope to be defined per phase.
 - Deploy target (later phases): Kubernetes on EKS
 
 ## Commands
-No code yet. Planned commands, to be confirmed once the module exists:
-- `docker compose up -d` -- Start Postgres, Redpanda, Temporal locally
-- `go run ./cmd/...` -- Run the service
+- `docker compose up -d --wait` -- Start Postgres, Redpanda, Temporal locally (ports bound to 127.0.0.1)
+- `go run ./cmd/ledger` -- Run the service (placeholder binary for now)
 - `go build ./...` -- Build
 - `go test ./...` -- Run tests
-- `go vet ./...` and `golangci-lint run` -- Lint
+- `go vet ./...` -- Lint (`golangci-lint run` planned)
 
 ## Architecture
 Planned flow: HTTP API (OAuth2 client credentials or API key) -> idempotency check -> single Postgres transaction that writes balanced journal entries and an outbox row -> outbox relay publishes to Redpanda. Temporal workflows drive retries and reconciliation. An ingestion worker pulls from or receives webhooks from a rate-limited external API, deduplicates, and posts through the same ledger write path.

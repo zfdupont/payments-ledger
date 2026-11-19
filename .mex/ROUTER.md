@@ -25,10 +25,12 @@ Then read this file fully before doing anything else in this session.
 
 ## Current Project State
 **Working:**
-- Nothing yet. New project: repo scaffold, CLAUDE.md, mex scaffold, and factory config only.
+- Go module `github.com/zfdupont/payments-ledger` (go 1.27, stdlib only) with a placeholder `cmd/ledger` binary and one smoke test
+- `docker-compose.yml`: Postgres 18, Redpanda, Temporal dev server, all with healthchecks, ports on 127.0.0.1
+- Factory config with build/test/lint commands; escalation only on deleted tests
 
 **Not yet built (Phase 1, ledger core):**
-- Go module, HTTP API, and Docker Compose stack (Postgres, Redpanda, Temporal dev server)
+- HTTP API
 - Double-entry ledger schema and versioned migrations
 - Idempotency keys on write endpoints
 - Transactional outbox and relay to Redpanda
