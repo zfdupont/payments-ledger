@@ -48,6 +48,7 @@ Project memory lives in `.mex/` (mex scaffold). Software factory config lives in
 ## Environment Variables
 See `.env.example` for placeholders.
 - `DATABASE_URL`
+- `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` (docker-compose.yml only; must match `DATABASE_URL`)
 - `KAFKA_BROKERS`, `OUTBOX_TOPIC`
 - `TEMPORAL_HOST`, `TEMPORAL_NAMESPACE`, `TEMPORAL_TASK_QUEUE`
 - `OAUTH_ISSUER_URL`, `OAUTH_AUDIENCE`, `API_KEY_PEPPER`
