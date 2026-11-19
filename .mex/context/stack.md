@@ -45,8 +45,8 @@ mex:
 -->
 
 ## Core Technologies
-- **Go** -- service language. [TO BE DETERMINED: Go version]
-- **PostgreSQL** -- primary database. [TO BE DETERMINED: version]
+- **Go** -- service language. Go 1.27 (`go.mod`)
+- **PostgreSQL** -- primary database. 18 (`postgres:18.7-alpine` in compose)
 - **Redpanda** -- Kafka-API-compatible broker
 - **Temporal** -- durable workflow engine, self-hosted dev server
 - **Docker Compose** -- local infra for Phase 1
@@ -54,9 +54,9 @@ mex:
 
 ## Key Libraries
 - **Temporal Go SDK** (`go.temporal.io/sdk`) -- workflows and activities
-- [TO BE DETERMINED: Postgres driver (e.g. pgx) and query layer]
+- **pgx v5** (`github.com/jackc/pgx/v5`) -- Postgres driver; no query layer yet
 - [TO BE DETERMINED: Kafka client (e.g. franz-go)]
-- [TO BE DETERMINED: migration tool]
+- [TO BE DETERMINED: migration runner; SQL files exist in `migrations/`]
 - [TO BE DETERMINED: HTTP router]
 
 ## What We Deliberately Do NOT Use

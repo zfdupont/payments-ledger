@@ -31,7 +31,7 @@ mex:
 # Add a Migration
 
 ## Context
-Schema changes only through versioned migrations. [VERIFY AFTER FIRST IMPLEMENTATION: migration tool and directory]
+Schema changes only through versioned migrations. Files live in `migrations/` as `NNNN_<name>.up.sql` / `.down.sql`. No migration runner yet; tests apply the `.up.sql` into a throwaway schema.
 
 ## Steps
 1. Create a new migration with the next version; never edit an applied one.
