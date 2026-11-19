@@ -54,7 +54,7 @@ mex:
 -->
 
 ## System Overview
-Planned flow (built so far: Go module skeleton, Compose stack, ledger schema with DB-enforced balance):
+Planned flow (built so far: Go module skeleton, Compose stack, ledger schema with DB-enforced balance and append-only triggers):
 
 Client -> HTTP API -> auth (OAuth2 client credentials or API key) -> idempotency check
 (key + request hash; a replay returns the stored response) -> ledger service opens one

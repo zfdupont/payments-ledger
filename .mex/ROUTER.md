@@ -28,11 +28,12 @@ Then read this file fully before doing anything else in this session.
 - Go module `github.com/zfdupont/payments-ledger` (go 1.27, stdlib only) with a placeholder `cmd/ledger` binary and one smoke test
 - `docker-compose.yml`: Postgres 18, Redpanda, Temporal dev server, all with healthchecks, ports on 127.0.0.1
 - Migration `0001_ledger_core`: accounts, journal_entries, journal_lines with deferred constraint triggers rejecting unbalanced (per currency) or empty entries; `internal/ledger/balance_test.go`
+- Migration `0002_ledger_append_only`: statement-level BEFORE UPDATE/DELETE/TRUNCATE triggers on accounts, journal_entries, journal_lines raise SQLSTATE 23001; `internal/ledger/append_only_test.go` (also covers reversing entries)
 - Factory config with build/test/lint commands; escalation only on deleted tests
 
 **Not yet built (Phase 1, ledger core):**
 - HTTP API
-- Append-only enforcement on ledger tables; migration runner
+- Migration runner
 - Idempotency keys on write endpoints
 - Transactional outbox and relay to Redpanda
 - Temporal retry and reconciliation workflows
