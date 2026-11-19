@@ -1,0 +1,4 @@
+-- 0001_ledger_core down: intentionally a no-op.
+--
+-- Ledger tables are append-only records of money movement and are not
+-- dropped by a down migration. To undo a mistake, post a reversing entry.
