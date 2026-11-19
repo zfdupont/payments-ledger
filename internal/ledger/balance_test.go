@@ -7,6 +7,8 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path/filepath"
+	"slices"
 	"testing"
 	"time"
 
@@ -15,7 +17,7 @@ import (
 )
 
 // connect returns a connection whose search_path is a throwaway schema with
-// the ledger migration applied. It skips when Postgres is not available.
+// every up migration applied in sorted order. It skips when Postgres is not available.
 func connect(t *testing.T) *pgx.Conn {
 	t.Helper()
 
@@ -60,12 +62,19 @@ func connect(t *testing.T) *pgx.Conn {
 		t.Fatalf("set search_path: %v", err)
 	}
 
-	sql, err := os.ReadFile("../../migrations/0001_ledger_core.up.sql")
-	if err != nil {
-		t.Fatalf("read migration: %v", err)
+	files, err := filepath.Glob("../../migrations/*.up.sql")
+	if err != nil || len(files) == 0 {
+		t.Fatalf("find migrations: %v (matched %d files)", err, len(files))
 	}
-	if _, err := conn.Exec(bg, string(sql)); err != nil {
-		t.Fatalf("apply migration: %v", err)
+	slices.Sort(files)
+	for _, f := range files {
+		sql, err := os.ReadFile(f)
+		if err != nil {
+			t.Fatalf("read migration %s: %v", f, err)
+		}
+		if _, err := conn.Exec(bg, string(sql)); err != nil {
+			t.Fatalf("apply migration %s: %v", f, err)
+		}
 	}
 	if _, err := conn.Exec(bg, "INSERT INTO accounts (name) VALUES ('cash'), ('revenue')"); err != nil {
 		t.Fatalf("seed accounts: %v", err)
