@@ -21,7 +21,9 @@ A Go double-entry payments ledger over Postgres with idempotent writes, a transa
 - Run: `go run ./cmd/ledger` (placeholder; prints `payments-ledger`)
 - Build: `go build ./...`
 - Test: `go test ./...`
-- Lint: `go vet ./...` (`golangci-lint run` planned, not installed yet)
+- Vet: `go vet ./...`
+- Lint: `go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.15.0 run` (config `.golangci.yml`; no global install needed)
+- CI: `.github/workflows/ci.yml` runs build, vet, lint, and tests against a Postgres service (fails on any skipped test)
 
 ## Project Knowledge
 For a question about project decisions, conventions, or behavior, start with `mex wiki query "<question>" --limit 5 --json`. Inspect matched terms and each grounding's health: partial matches are leads, and `changed` means re-check the claim against code. If the index is unavailable, follow `ROUTER.md` or start from `mex graph scope "<task>"`. Reads never rebuild or refresh an index.

@@ -7,7 +7,7 @@
 - [x] Add the first versioned migration under `migrations/` creating accounts, journal_entries and journal_lines (`amount_minor` bigint, `currency` char(3)) with a deferred constraint trigger that rejects any journal entry whose debits do not equal credits per currency, plus `internal/ledger/balance_test.go` that inserts an unbalanced entry against Postgres and asserts the commit fails and a balanced entry succeeds. (job 003-balance-migration)
 - [x] Add a migration with BEFORE UPDATE OR DELETE (and TRUNCATE) triggers that raise an exception on `journal_entries`, `journal_lines` and any other ledger table, plus `internal/ledger/append_only_test.go` asserting UPDATE and DELETE on each ledger table fail while INSERT of a reversing entry succeeds. (job 004-append-only)
 - [x] Add `internal/api/idempotency_test.go`, a table-driven test that iterates every registered write route (POST/PUT/PATCH/DELETE) in the HTTP router and asserts (a) a replay with the same Idempotency-Key and body returns the original status and body without a second ledger write, (b) the same key with a different body returns a conflict error (409/422), and (c) a missing key is rejected; fail the test if a write route is absent from the table. (job 005-idempotency-test)
-- [ ] Add `.github/workflows/ci.yml` that on every push runs `go build ./...`, `go vet ./...`, `golangci-lint run` (with a committed `.golangci.yml`) and `go test ./...` against a Postgres service container, and add `lint: golangci-lint run` to `commands` in `factory/factory.yaml` once the config exists; done when the workflow passes on a pushed branch.
+- [x] Add `.github/workflows/ci.yml` that on every push runs `go build ./...`, `go vet ./...`, `golangci-lint run` (with a committed `.golangci.yml`) and `go test ./...` against a Postgres service container, and add `lint: golangci-lint run` to `commands` in `factory/factory.yaml` once the config exists; done when the workflow passes on a pushed branch. (job 006-ci-workflow)
 
 
 ## Follow-ups from job 001-go-module
@@ -42,3 +42,8 @@
 - [ ] Return JSON error bodies for unmatched routes and wrong methods (404/405) from the `internal/api` router instead of the mux's plain text.
 - [ ] Serve the router from `cmd/ledger` (listen on `HTTP_ADDR`, connect via `DATABASE_URL`) only together with auth, so no unauthenticated write route is ever exposed.
 - [ ] When auth lands, replace the constant `anonymous` client id in `internal/api` idempotency scoping with the authenticated client id, and add a test that two clients can use the same key independently.
+
+## Follow-ups from job 006-ci-workflow
+
+- [ ] Owner check: add a GitHub remote, push a branch, and confirm `.github/workflows/ci.yml` passes (build, vet, golangci-lint, and `go test` against the Postgres service with no skipped tests).
+- [ ] Narrow the `.golangci.yml` errcheck exclusion for `(net/http.ResponseWriter).Write` to a single JSON-write helper in `internal/api`, so other ignored write errors are still reported.

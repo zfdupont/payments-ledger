@@ -30,7 +30,8 @@ Then read this file fully before doing anything else in this session.
 - Migration `0001_ledger_core`: accounts, journal_entries, journal_lines with deferred constraint triggers rejecting unbalanced (per currency) or empty entries; `internal/ledger/balance_test.go`
 - Migration `0002_ledger_append_only`: statement-level BEFORE UPDATE/DELETE/TRUNCATE triggers on accounts, journal_entries, journal_lines raise SQLSTATE 23001; `internal/ledger/append_only_test.go` (also covers reversing entries)
 - `internal/api`: router with `POST /journal-entries` (idempotent: 400 missing key, 422 key reuse with different body, byte-identical replay), migration `0003_idempotency_keys`, `PostEntry` in `internal/ledger/ledger.go`; `internal/api/idempotency_test.go` fails if a write route lacks an idempotency case
-- Factory config with build/test/lint commands; escalation only on deleted tests
+- CI: `.github/workflows/ci.yml` (pinned actions, Postgres service, skip guard) and `.golangci.yml`; not yet run on GitHub (no remote)
+- Factory config with build/test/vet/lint commands; escalation only on deleted tests
 
 **Not yet built (Phase 1, ledger core):**
 - Serving the HTTP API from `cmd/ledger` (router exists, not served until auth lands); more write routes (transfers)

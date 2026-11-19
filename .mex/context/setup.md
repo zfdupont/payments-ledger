@@ -72,7 +72,8 @@ mex:
 - `docker compose up -d --wait` -- start local infra; `docker compose down -v` to reset
 - `go run ./cmd/ledger` -- run the (placeholder) service
 - `go test ./...` -- run tests
-- `go vet ./...` -- lint (`golangci-lint run` planned)
+- `go vet ./...` -- vet
+- `go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.15.0 run` -- lint (first run builds the tool, about a minute)
 - `go build ./...` -- build (writes a `ledger` binary in the repo root)
 
 ## Common Issues

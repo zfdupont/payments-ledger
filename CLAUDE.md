@@ -29,7 +29,9 @@ Kubernetes deployment on EKS. Scope to be defined per phase.
 - `go run ./cmd/ledger` -- Run the service (placeholder binary for now)
 - `go build ./...` -- Build
 - `go test ./...` -- Run tests
-- `go vet ./...` -- Lint (`golangci-lint run` planned)
+- `go vet ./...` -- Vet
+- `go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.15.0 run` -- Lint (config `.golangci.yml`)
+- Tests against Postgres: set `DATABASE_URL` (DB tests skip without it; CI fails on skips)
 
 ## Architecture
 Planned flow: HTTP API (OAuth2 client credentials or API key) -> idempotency check -> single Postgres transaction that writes balanced journal entries and an outbox row -> outbox relay publishes to Redpanda. Temporal workflows drive retries and reconciliation. An ingestion worker pulls from or receives webhooks from a rate-limited external API, deduplicates, and posts through the same ledger write path.

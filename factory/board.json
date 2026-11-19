@@ -110,6 +110,26 @@
       "note": "auto-approved and merged",
       "updated": "2026-11-19T12:16:25Z",
       "lane": "full"
+    },
+    {
+      "id": "006-ci-workflow",
+      "title": "CI workflow + golangci-lint",
+      "branch": "factory/006-ci-workflow",
+      "worktree": "/Users/zfdupont/payments-ledger-factory/006-ci-workflow",
+      "stage": "merged",
+      "round": 1,
+      "rework": 0,
+      "reviews": {
+        "invariants": "PASS",
+        "logic": "PASS",
+        "maintainability": "PASS",
+        "security": "PASS",
+        "contract-api": "PASS"
+      },
+      "history": [],
+      "note": "auto-approved and merged; owner check: CI passes on a pushed branch",
+      "updated": "2026-11-19T12:23:33Z",
+      "lane": "full"
     }
   ]
 }
