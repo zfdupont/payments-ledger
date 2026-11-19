@@ -57,7 +57,7 @@ mex:
 - **pgx v5** (`github.com/jackc/pgx/v5`) -- Postgres driver; no query layer yet
 - [TO BE DETERMINED: Kafka client (e.g. franz-go)]
 - [TO BE DETERMINED: migration runner; SQL files exist in `migrations/`]
-- [TO BE DETERMINED: HTTP router]
+- **net/http `ServeMux`** -- HTTP router (stdlib, Go 1.22+ method patterns)
 
 ## What We Deliberately Do NOT Use
 - No floating-point money types; integer minor units only

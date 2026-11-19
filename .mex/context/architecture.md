@@ -68,7 +68,7 @@ The ingestion worker receives webhooks or pulls from a rate-limited external API
 deduplicates by external event id, and posts through the same ledger write path.
 
 ## Key Components
-- **HTTP API** -- write and read endpoints; every write requires an `Idempotency-Key`. [TO BE DETERMINED: router library]
+- **HTTP API** -- write and read endpoints; every write requires an `Idempotency-Key`. Router is stdlib `http.ServeMux` in `internal/api`; write routes register only via `Router.addWrite`, which always wraps them in the idempotency layer (table `idempotency_keys`, PK `(client_id, idempotency_key)`, check-or-insert in the same tx as the ledger write). Not yet served by `cmd/ledger`.
 - **Ledger service** -- accounts, journal entries, transfers; the only code that writes ledger tables
 - **Idempotency store** -- Postgres table keyed by (client, key); stores request hash and response
 - **Outbox relay** -- publishes outbox rows to Redpanda in order, at-least-once
