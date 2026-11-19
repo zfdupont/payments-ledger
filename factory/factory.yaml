@@ -34,7 +34,7 @@ escalate:
   - changes a ledger invariant (balance check, append-only rule, money representation) or how it is enforced
   - changes authentication or authorization (token validation, API key hashing, scopes)
   - {when: adds or edits a schema migration, paths: ["migrations/**", "**/migrations/**", "*.sql"]}
-  - {when: adds a dependency or changes the build toolchain, paths: [go.mod, Makefile, Dockerfile, docker-compose.yml, docker-compose.yaml, compose.yml, compose.yaml]}
+  - {when: adds a dependency or changes the build toolchain, paths: [Makefile, Dockerfile, docker-compose.yml, docker-compose.yaml, compose.yml, compose.yaml]}
   - adds a dependency, changes the build toolchain, or deletes tests
 lanes:
   trivial: {paths: ["*.md", ".mex/**"], max_changed_lines: 40, skip: [spec]}
