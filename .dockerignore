@@ -1,0 +1,35 @@
+# Environment
+.env
+.env.*
+.env.local
+!.env.example
+
+# Dependencies
+node_modules/
+vendor/
+__pycache__/
+.venv/
+
+# Build outputs
+dist/
+build/
+bin/
+.next/
+*.pyc
+coverage.out
+
+# Claude local files
+.claude/settings.local.json
+CLAUDE.local.md
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VCS
+.git/
