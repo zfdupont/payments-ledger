@@ -1,0 +1,53 @@
+version: 1
+base: main
+context: [CLAUDE.md, .mex/AGENTS.md, .mex/context/architecture.md, .mex/context/conventions.md]
+rules: .mex/AGENTS.md#Non-Negotiables
+tests: none
+commands: {}
+merge_gate: []
+scout:
+  todo_paths: []
+  docs: [CLAUDE.md, .mex/ROUTER.md, .mex/context/]
+  checks:
+    - a Go module exists with `go build ./...`, `go test ./...` and `go vet ./...` wired as factory commands
+    - a Docker Compose file starts Postgres, Redpanda and the Temporal dev server for local runs and tests
+    - the database rejects an unbalanced journal entry, with a test
+    - the database rejects UPDATE and DELETE on ledger tables, with a test
+    - every write endpoint has a test for idempotent replay and for a conflicting replay
+    - CI runs build, vet, lint and tests on every push
+builder:
+  runtime: claude
+  resume: session
+reviewers:
+  - name: invariants
+    why: ledger hard rules in .mex/AGENTS.md (balanced entries, append-only, idempotency keys, outbox-only events, integer money)
+  - name: logic
+    why: correctness of transfers, idempotent replay, outbox relay and Temporal retry paths, including error and concurrency cases
+  - name: maintainability
+    why: conventions and verify checklist in .mex/context/conventions.md, versioned migrations, simplicity
+  - name: security
+    why: OAuth2 client-credentials and peppered API keys guard money movement; secrets must stay out of code and logs
+  - name: contract-api
+    why: the HTTP API is the service's interface; idempotency-key semantics and error responses are a contract for clients
+qa: null
+escalate:
+  - changes a ledger invariant (balance check, append-only rule, money representation) or how it is enforced
+  - changes authentication or authorization (token validation, API key hashing, scopes)
+  - {when: adds or edits a schema migration, paths: ["migrations/**", "**/migrations/**", "*.sql"]}
+  - {when: adds a dependency or changes the build toolchain, paths: [go.mod, go.sum, Makefile, Dockerfile, docker-compose.yml, docker-compose.yaml, compose.yml, compose.yaml]}
+  - adds a dependency, changes the build toolchain, or deletes tests
+lanes:
+  trivial: {paths: ["*.md", ".mex/**"], max_changed_lines: 40, skip: [spec]}
+related: []
+models:
+  spec-writer: opus high
+  builder: sonnet high
+  reviewers: sonnet high
+  approver: opus high
+  arbiter: opus high
+  scout: sonnet high
+  setup-surveyor: sonnet high
+  foundations-scout: sonnet high
+  tuner: opus high
+  triage: haiku
+  roadmapper: opus high
