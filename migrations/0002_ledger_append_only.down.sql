@@ -1,0 +1,4 @@
+-- 0002_ledger_append_only down: intentionally a no-op.
+--
+-- The append-only triggers enforce a hard ledger rule, so a down migration
+-- does not drop them. To correct a ledger row, post a reversing entry.
