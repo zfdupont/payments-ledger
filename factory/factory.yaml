@@ -2,8 +2,11 @@ version: 1
 base: main
 context: [CLAUDE.md, .mex/AGENTS.md, .mex/context/architecture.md, .mex/context/conventions.md]
 rules: .mex/AGENTS.md#Non-Negotiables
-tests: none
-commands: {}
+tests: thin
+commands:
+  build: go build ./...
+  test: go test ./...
+  lint: go vet ./...
 merge_gate: []
 scout:
   todo_paths: []
