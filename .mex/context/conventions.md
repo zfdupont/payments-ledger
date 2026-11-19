@@ -46,7 +46,7 @@ mex:
 ## Naming
 - Database tables and columns: snake_case (confirmed in `migrations/0001_ledger_core.up.sql`)
 - Money fields: `amount_minor` (int64) paired with `currency` (ISO 4217)
-- Go packages: binaries under `cmd/<name>` (currently `cmd/ledger`); internal code planned under `internal/<area>` (e.g. `internal/ledger`, `internal/api`)
+- Go packages: binaries under `cmd/<name>` (currently `cmd/ledger`); internal code planned under `internal/<area>` (e.g. `internal/ledger`; an HTTP package is planned)
 
 ## Structure
 - Ledger table writes live only in the ledger service package; handlers never write ledger tables
