@@ -45,5 +45,5 @@
 
 ## Follow-ups from job 006-ci-workflow
 
-- [ ] Owner check: add a GitHub remote, push a branch, and confirm `.github/workflows/ci.yml` passes (build, vet, golangci-lint, and `go test` against the Postgres service with no skipped tests).
+- [x] Owner check: add a GitHub remote, push a branch, and confirm `.github/workflows/ci.yml` passes (build, vet, golangci-lint, and `go test` against the Postgres service with no skipped tests).
 - [ ] Narrow the `.golangci.yml` errcheck exclusion for `(net/http.ResponseWriter).Write` to a single JSON-write helper in `internal/api`, so other ignored write errors are still reported.
